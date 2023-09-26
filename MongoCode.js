@@ -2,7 +2,7 @@ const mongo=require('mongoclient/config');
 const mongodb=require('mongodb');
 const mongoclient=mongodb.MongoClient;
 
-const URL = "mongodb://localhost:27017/PhotoGallery";
+const URL = "mongodb://localhost:27017";
 
 async function Categories(){
     try{
@@ -15,12 +15,22 @@ async function Categories(){
     }
     finally{}
 }
-
+async function GetPhotosByCategory(id){
+    try{
+    const client=new mongoclient(URL);
+    await client.connect();
+    const db=client.db('PhotoGallery');
+    const result=db.collection('Photographs').find({categoryId:id}).project({_id:0}).toArray();
+    return result;
+    }
+    finally{}
+}
 // (async()=>{
-// const res=await Categories();
+// const res=await GetPhotosByCategory(101);
 // console.log(JSON.stringify(res));
 // })();
 
 module.exports= {
-    categories:Categories
+    categories:Categories,
+    photographs:GetPhotosByCategory
 };
