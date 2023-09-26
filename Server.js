@@ -20,4 +20,17 @@ app.get('/categories',(req,res)=>{
     response.then(r=>res.json(r)).catch(e=>res.send(e.errorMessage));
 });
 
+//--------------get images by categoryId-------------------------
+app.get('/photos/:id',async (req,res)=>{
+    try{
+        const cid=parseInt(req.params.id);
+        const response=await ImageExports.photographs(cid);
+        res.json(response);
+    }
+    catch(e){
+        res.send(e.errorMessage);
+    }
+    
+});
+
 app.listen(3031,()=>console.log('server listening on port 3031..'));

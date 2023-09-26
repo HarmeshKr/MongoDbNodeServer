@@ -20,7 +20,7 @@ async function GetPhotosByCategory(id){
     const client=new mongoclient(URL);
     await client.connect();
     const db=client.db('PhotoGallery');
-    const result=db.collection('Photographs').find({categoryId:id}).project({_id:0}).toArray();
+    const result=db.collection('Photographs').find({categoryId:id}).project().toArray();
     return result;
     }
     finally{}
