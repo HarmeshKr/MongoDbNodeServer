@@ -33,4 +33,35 @@ app.get('/photos/:id',async (req,res)=>{
     
 });
 
+//---------get cart photos by id array-----------------------------
+app.post('/cart',async(req,res)=>{
+    try{
+         let photos=await ImageExports.cartPhotographs(req.body);
+         res.json(photos);
+    }
+    catch(e){
+        res.send(e.errorMessage);
+    }
+});
+//--------------------place order--------------
+app.post('/order',async(req,res)=>{
+    try{
+         let orderDetails=await ImageExports.placeOrder(req.body);
+         res.json(orderDetails);
+    }
+    catch(e){
+        res.send(e.errorMessage);
+    }
+});
+//--------------------validate credentials--------------
+app.post('/login',async(req,res)=>{
+    try{
+         let result=await ImageExports.validate(req.body);
+         res.json(result);
+    }
+    catch(e){
+        res.send(e.errorMessage);
+    }
+});
+
 app.listen(3031,()=>console.log('server listening on port 3031..'));
